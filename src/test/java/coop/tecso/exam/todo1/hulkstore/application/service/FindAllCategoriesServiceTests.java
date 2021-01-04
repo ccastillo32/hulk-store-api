@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -57,7 +58,7 @@ final class FindAllCategoriesServiceTests {
 		
 		int expectedCategories = 0;
 		
-		mockCategoriesInDatabaseWith(null);
+		mockCategoriesInDatabaseWith(Collections.emptyList());
 		
 		List<CategoryDto> categories = service.execute();
 		

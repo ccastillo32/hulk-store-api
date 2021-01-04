@@ -1,6 +1,5 @@
 package coop.tecso.exam.todo1.hulkstore.domain.service;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -19,8 +18,7 @@ public class CategoryService {
 	}
 	
 	public List<Category> findAllCategories() {
-		List<Category> all = repository.findAll();
-		return all == null ? Collections.emptyList() : all;
+		return repository.findAll();
 	}
 	
 }
