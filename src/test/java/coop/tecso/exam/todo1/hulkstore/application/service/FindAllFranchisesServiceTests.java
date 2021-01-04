@@ -59,7 +59,7 @@ final class FindAllFranchisesServiceTests {
 	
 	
 	@Test
-	@DisplayName("Should get an empty list of trademarks")
+	@DisplayName("Should get an empty list of franchises")
 	void shouldGetAnEmptyList() {
 		
 		int expectedFranchises = 0;
