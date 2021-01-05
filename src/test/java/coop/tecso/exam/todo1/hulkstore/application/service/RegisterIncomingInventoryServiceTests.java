@@ -14,22 +14,20 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import coop.tecso.exam.todo1.hulkstore.application.request.CreateInventoryMovementRequest;
+import coop.tecso.exam.todo1.hulkstore.application.request.RegisterIncomingInventoryRequest;
 import coop.tecso.exam.todo1.hulkstore.domain.model.Category;
 import coop.tecso.exam.todo1.hulkstore.domain.model.Franchise;
-import coop.tecso.exam.todo1.hulkstore.domain.model.MovementType;
 import coop.tecso.exam.todo1.hulkstore.domain.model.Product;
 import coop.tecso.exam.todo1.hulkstore.domain.repository.MovementRepository;
 import coop.tecso.exam.todo1.hulkstore.domain.repository.ProductRepository;
 import coop.tecso.exam.todo1.hulkstore.domain.service.MovementService;
 import coop.tecso.exam.todo1.hulkstore.domain.service.ProductService;
-import coop.tecso.exam.todo1.hulkstore.domain.service.exceptions.NotAValidMovementTypeException;
 import coop.tecso.exam.todo1.hulkstore.domain.service.exceptions.ProductDoesNotExistException;
 import coop.tecso.exam.todo1.hulkstore.domain.validator.InvalidFieldException;
 
 @ExtendWith(MockitoExtension.class)
 
-final class CreateInventoryMovementServiceTests {
+final class RegisterIncomingInventoryServiceTests {
 
 	@Mock
 	private MovementRepository movementRepository;
@@ -41,13 +39,13 @@ final class CreateInventoryMovementServiceTests {
 	
 	private ProductService productService;
 	
-	private CreateInventoryMovementService service;
+	private RegisterIncomingInventoryService service;
 	
 	@BeforeEach
 	public void setUp() {
 		movementService = new MovementService(movementRepository);
 		productService = new ProductService(productRepository);
-		service = new CreateInventoryMovementService(movementService, productService);
+		service = new RegisterIncomingInventoryService(movementService, productService);
 	}
 	
 	@Test
@@ -62,22 +60,7 @@ final class CreateInventoryMovementServiceTests {
 	@DisplayName("Cannot create a movement with null or empty fields.")
 	void cannotCreateAMovementWithEmptyFields() {
 		
-		assertThrows(InvalidFieldException.class, () -> new CreateInventoryMovementRequest(null, null, null, null, null, null) );
-		
-	}
-	
-	@Test
-	@DisplayName("Cannot create a movement if the type is not 'INCOMINGS' or 'OUTGOINGS'")
-	void cannotCreateMovementWithAnUnknwonType() {
-		
-		String id = "5d364b17-bf10-4b35-9aff-adfebf04b8eb";
-		String type = "WHATEVER";
-		String productId = "a5300e96-2968-467c-9f54-79eb0bedc94d";
-		Integer quantity = 1;
-		BigDecimal unitPrice = new BigDecimal("5");
-		CreateInventoryMovementRequest request = new CreateInventoryMovementRequest(id, productId, type, quantity, unitPrice, "");
-		
-		assertThrows(NotAValidMovementTypeException.class, () -> service.execute(request) );
+		assertThrows(InvalidFieldException.class, () -> new RegisterIncomingInventoryRequest(null, null, null, null, null) );
 		
 	}
 	
@@ -86,11 +69,10 @@ final class CreateInventoryMovementServiceTests {
 	void cannotCreateMovementForAnUnknwonProduct() {
 		
 		String id = "5d364b17-bf10-4b35-9aff-adfebf04b8eb";
-		String type = "INCOMINGS";
 		String randomProductId = "a5300e96-2968-467c-9f54-79eb0bedc94d";
 		Integer quantity = 1;
 		BigDecimal unitPrice = new BigDecimal("5");
-		CreateInventoryMovementRequest request = new CreateInventoryMovementRequest(id, randomProductId, type, quantity, unitPrice, "");
+		RegisterIncomingInventoryRequest request = new RegisterIncomingInventoryRequest(id, randomProductId, quantity, unitPrice, "");
 		
 		Mockito.when(productRepository.findById(randomProductId)).thenReturn(Optional.empty());
 		
@@ -103,12 +85,11 @@ final class CreateInventoryMovementServiceTests {
 	void cannotCreateMovementWithQuantityZero() {
 		
 		String id = "5d364b17-bf10-4b35-9aff-adfebf04b8eb";
-		String type = "INCOMINGS";
 		String productId = "a5300e96-2968-467c-9f54-79eb0bedc94d";
 		Integer quantity = 0;
 		BigDecimal unitPrice = new BigDecimal("5");
 		
-		assertThrows(InvalidFieldException.class, () -> new CreateInventoryMovementRequest(id, productId, type, quantity, unitPrice, ""));
+		assertThrows(InvalidFieldException.class, () -> new RegisterIncomingInventoryRequest(id, productId, quantity, unitPrice, ""));
 		
 	}
 	
@@ -117,7 +98,6 @@ final class CreateInventoryMovementServiceTests {
 	void createAValidIncomingInventoryMovement() {
 
 		String id = "5d364b17-bf10-4b35-9aff-adfebf04b8eb";
-		String type = MovementType.INCOMINGS.name();
 		String productId = "a5300e96-2968-467c-9f54-79eb0bedc94d";
 		Integer quantity = 5;
 		BigDecimal unitPrice = new BigDecimal("5000");
@@ -127,7 +107,7 @@ final class CreateInventoryMovementServiceTests {
 		Product product = Product.of(productId, "001", "Product 1", new BigDecimal("100"), new BigDecimal("200"), category.getId(), franchise.getId());
 		Mockito.when(productRepository.findById(productId)).thenReturn(Optional.of(product));
 		
-		CreateInventoryMovementRequest request = CreateInventoryMovementRequest.of(id, productId, type, quantity, unitPrice, "");
+		RegisterIncomingInventoryRequest request = RegisterIncomingInventoryRequest.of(id, productId, quantity, unitPrice, "");
 		
 		assertDoesNotThrow( () -> service.execute(request) );
 		

@@ -2,23 +2,13 @@ package coop.tecso.exam.todo1.hulkstore.controllers.request;
 
 import java.math.BigDecimal;
 
-public class CreateInventoryMovementHttpRequest {
+public class RegisterIncomingInventoryHttpRequest {
 
-	private String type;
-	
 	private Integer quantity;
 	
 	private BigDecimal unitPrice;
 	
 	private String observation;
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
 
 	public Integer getQuantity() {
 		return quantity;
