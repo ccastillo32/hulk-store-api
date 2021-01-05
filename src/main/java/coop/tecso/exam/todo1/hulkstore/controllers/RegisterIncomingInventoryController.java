@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import coop.tecso.exam.todo1.hulkstore.application.request.RegisterIncomingInventoryRequest;
 import coop.tecso.exam.todo1.hulkstore.application.service.RegisterIncomingInventoryService;
 import coop.tecso.exam.todo1.hulkstore.controllers.request.RegisterIncomingInventoryHttpRequest;
-import coop.tecso.exam.todo1.hulkstore.controllers.response.CreateInventoryMovementResponse;
+import coop.tecso.exam.todo1.hulkstore.controllers.response.RegisterMovementResponse;
 
 @RestController
 
@@ -25,13 +25,13 @@ public class RegisterIncomingInventoryController {
 	}
 	
 	@PostMapping("/api/movements/{productId}/incomings")
-	public ResponseEntity<CreateInventoryMovementResponse> hanldeRequest(@PathVariable String productId, @RequestBody RegisterIncomingInventoryHttpRequest requestBody) {
+	public ResponseEntity<RegisterMovementResponse> hanldeRequest(@PathVariable String productId, @RequestBody RegisterIncomingInventoryHttpRequest requestBody) {
 		
 		RegisterIncomingInventoryRequest request = toRequest(productId, requestBody);
 		
 		service.execute(request);
 		
-		CreateInventoryMovementResponse responseBody = CreateInventoryMovementResponse.of(request.getId());
+		RegisterMovementResponse responseBody = RegisterMovementResponse.of(request.getId());
 		
 		return new ResponseEntity<>(responseBody, HttpStatus.CREATED);
 		

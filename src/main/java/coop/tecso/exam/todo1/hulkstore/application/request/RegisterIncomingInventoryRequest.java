@@ -24,9 +24,7 @@ public class RegisterIncomingInventoryRequest {
 		FieldValidator.notNull(quantity, "quantity");
 		FieldValidator.notNull(unitPrice, "unitPrice");
 		FieldValidator.notEmpty("observation", observation);
-		
-		FieldValidator.notZeroOrBelow(quantity, "quantity");
-		
+
 		this.id = id;
 		this.productId = productId;
 		this.quantity = quantity;

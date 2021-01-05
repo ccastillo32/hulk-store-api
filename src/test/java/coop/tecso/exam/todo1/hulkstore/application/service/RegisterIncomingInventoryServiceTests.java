@@ -89,7 +89,9 @@ final class RegisterIncomingInventoryServiceTests {
 		Integer quantity = 0;
 		BigDecimal unitPrice = new BigDecimal("5");
 		
-		assertThrows(InvalidFieldException.class, () -> new RegisterIncomingInventoryRequest(id, productId, quantity, unitPrice, ""));
+		RegisterIncomingInventoryRequest request = new RegisterIncomingInventoryRequest(id, productId, quantity, unitPrice, "");
+		
+		assertThrows(InvalidFieldException.class, () -> service.execute(request));
 		
 	}
 	
