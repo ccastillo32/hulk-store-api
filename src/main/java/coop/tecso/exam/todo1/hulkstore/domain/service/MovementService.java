@@ -25,4 +25,8 @@ public class MovementService {
 		return repository.findByProductId(productId);
 	}
 	
+	public List<Movement> findAllMovements() {
+		return repository.findAll();
+	}
+	
 }

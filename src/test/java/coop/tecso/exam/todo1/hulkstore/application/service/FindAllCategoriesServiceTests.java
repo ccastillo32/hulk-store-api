@@ -38,7 +38,7 @@ final class FindAllCategoriesServiceTests {
 	}
 	
 	@Test
-	@DisplayName("Should get a non empty list of categories")
+	@DisplayName("Should get a empty list of categories")
 	void shouldGetANonEmptyList() {
 		
 		int expectedCategories = 2;
