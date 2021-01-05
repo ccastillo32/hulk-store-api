@@ -1,5 +1,6 @@
 package coop.tecso.exam.todo1.hulkstore.domain.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -30,6 +31,10 @@ public class ProductService {
 			throw new ProductCodeAlreadyExistsException(productCode);
 		}
 		
+	}
+	
+	public List<Product> findAllProducts() {
+		return repository.findAll();
 	}
 	
 }
