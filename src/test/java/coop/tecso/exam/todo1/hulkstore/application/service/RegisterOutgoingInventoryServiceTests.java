@@ -35,7 +35,7 @@ import coop.tecso.exam.todo1.hulkstore.domain.validator.InvalidFieldException;
 
 @ExtendWith(MockitoExtension.class)
 
-public class RegisterOutgoingInventoryServiceTests {
+final class RegisterOutgoingInventoryServiceTests {
 
 	@Mock
 	private MovementRepository movementRepository;
