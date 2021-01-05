@@ -20,5 +20,15 @@ public class FieldValidator {
 		}
 		
 	}
+	
+	public static void notZeroOrBelow(Integer value, String fieldName) {
+		
+		notNull(value, fieldName);
+		
+		if(value.intValue() < 1) {
+			throw new InvalidFieldException(String.format("'%s' cannot be zero or negative", fieldName));
+		}
+		
+	}
 
 }
