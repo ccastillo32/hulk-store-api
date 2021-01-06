@@ -1,6 +1,7 @@
 package coop.tecso.exam.todo1.hulkstore.application.service;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,6 +57,7 @@ public class FindAllProductsService {
 		        	   return ProductDto.from(product, category, franchise);
 		        	   
 		           })
+		           .sorted(Comparator.comparing(ProductDto::getCode))
 		           .collect(Collectors.toList());
 		
 	}
