@@ -28,7 +28,7 @@ import coop.tecso.exam.todo1.hulkstore.domain.service.exceptions.ProductDoesNotE
 
 @ExtendWith(MockitoExtension.class)
 
-final class FindProductByIdServiceA {
+final class FindProductByIdServiceTests {
 	
 	@Mock
 	private ProductRepository productRepository;

@@ -45,7 +45,7 @@ CREATE TABLE movements (
 	quantity INTEGER NOT NULL,
 	price DECIMAL (10,2) NOT NULL,
 	observation VARCHAR(250),
-	created_at DATETIME NOT NULL,
+	created_at TIMESTAMP NOT NULL,
 	
 	PRIMARY KEY (id),
 	FOREIGN KEY (product_id) REFERENCES products (id)

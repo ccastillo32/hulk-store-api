@@ -20,13 +20,15 @@ public class FindAllMovementsService {
 		this.movementService = movementService;
 	}
 	
-	public List<MovementDto> execute() {
+	public List<MovementDto> execute(String productId) {
 		
-		return movementService.findAllMovements()
-				              .stream()
-				              .sorted(Comparator.comparing(Movement::getCreatedAt))
-				              .map(MovementDto::fromModel)
-				              .collect(Collectors.toList());
+		List<Movement> allMovements = productId != null ? movementService.findAllMovementsByProduct(productId)
+				                                        : movementService.findAllMovements();
+		
+		return allMovements.stream()
+				           .sorted(Comparator.comparing(Movement::getCreatedAt))
+				           .map(MovementDto::fromModel)
+				           .collect(Collectors.toList());
 		
 	}
 	

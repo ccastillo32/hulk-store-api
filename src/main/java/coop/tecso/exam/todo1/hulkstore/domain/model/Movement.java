@@ -30,7 +30,7 @@ public class Movement {
 	
 	private String observation;
 	
-	@Column(name = "created_at", columnDefinition = "DATETIME")
+	@Column(name = "created_at", columnDefinition = "TIMESTAMP")
 	private LocalDateTime createdAt;
 	
 	public Movement() {

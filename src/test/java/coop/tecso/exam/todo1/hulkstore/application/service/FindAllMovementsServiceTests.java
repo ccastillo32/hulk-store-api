@@ -43,11 +43,13 @@ final class FindAllMovementsServiceTests {
 	@DisplayName("Should get a non empty list of movements")
 	void shouldGetANonEmptyList() {
 		
-		mockMovements();
+		Mockito.when(movementRepository.findAll()).thenReturn(movements());
 		
 		int expectedMovements = 1;
 		
-		List<MovementDto> allMovements = service.execute();
+		String productId = null;
+		
+		List<MovementDto> allMovements = service.execute(productId);
 		
 		assertEquals(expectedMovements, allMovements.size());
 		
@@ -61,14 +63,31 @@ final class FindAllMovementsServiceTests {
 		
 		int expectedMovements = 0;
 		
-		List<MovementDto> allMovements = service.execute();
+		String productId = null;
+		
+		List<MovementDto> allMovements = service.execute(productId);
 		
 		assertEquals(expectedMovements, allMovements.size());
 		
 	}
 	
-	private void mockMovements() {
+	@Test
+	@DisplayName("Should get all the movements by product id")
+	void shouldGetAllTheMovementsByProduct() {
 		
+		String productId = "a5300e96-2968-467c-9f54-79eb0bedc94d";
+		
+		Mockito.when(movementRepository.findByProductId(productId)).thenReturn(movements());
+		
+		int expectedMovements = 1;
+		
+		List<MovementDto> allMovements = service.execute(productId);
+		
+		assertEquals(expectedMovements, allMovements.size());
+		
+	}
+	
+	private List<Movement> movements() {
 		String id = "c26907bb-adf4-4160-96e0-20545a3543ef";
 		String productId = "a5300e96-2968-467c-9f54-79eb0bedc94d";
 		MovementType type = MovementType.INCOMINGS;
@@ -76,12 +95,9 @@ final class FindAllMovementsServiceTests {
 		BigDecimal price = new BigDecimal("3000");
 		String observation = "Some observation";
 		LocalDateTime createdAt = LocalDateTime.now();
-		Movement movement = Movement.of(id, productId, type, quantity, price, observation, createdAt);
+		Movement movementOne = Movement.of(id, productId, type, quantity, price, observation, createdAt);
 		
-		List<Movement> allMovements = Arrays.asList(movement);
-		
-		Mockito.when(movementRepository.findAll()).thenReturn(allMovements);
-		
+		return Arrays.asList(movementOne);
 	}
 	
 }
