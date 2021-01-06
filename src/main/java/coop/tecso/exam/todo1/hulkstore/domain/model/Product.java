@@ -47,6 +47,8 @@ public class Product {
 		FieldValidator.notEmpty(categoryId, "categoryId");
 		FieldValidator.notEmpty(franchiseId, "franchiseId");
 		
+		FieldValidator.notZeroOrNegative(purchasePrice, "purchasePrice");
+		FieldValidator.notZeroOrNegative(sellingPrice, "sellingPrice");
 		
 		this.id = id;
 		this.code = code;

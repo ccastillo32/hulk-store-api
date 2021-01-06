@@ -7,7 +7,7 @@ import coop.tecso.exam.todo1.hulkstore.util.DateUtil;
 
 public class MovementDto {
 	
-private String id;
+	private String id;
 	
 	private String productId;
 	

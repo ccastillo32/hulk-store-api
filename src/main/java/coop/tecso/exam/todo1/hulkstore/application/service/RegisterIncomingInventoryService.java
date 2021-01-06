@@ -46,7 +46,7 @@ public class RegisterIncomingInventoryService {
 	}
 	
 	private void checkIfQuantityIsGreaterThanZero(Integer quantity) {
-		FieldValidator.notZeroOrBelow(quantity, "quantity");
+		FieldValidator.notZeroOrNegative(quantity, "quantity");
 	}
 	
 	private Movement convertToMovement(RegisterIncomingInventoryRequest request) {
