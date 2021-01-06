@@ -137,8 +137,8 @@ final class CreateProductServiceTests {
 				                                      .code(request.getCode())
 				                                      .categoryId(request.getCategoryId())
 				                                      .franchiseId(request.getFranchiseId())
-				                                      .purchasePrice(BigDecimal.ZERO)
-				                                      .sellingPrice(BigDecimal.ZERO)
+				                                      .purchasePrice(new BigDecimal("1"))
+				                                      .sellingPrice(new BigDecimal("1"))
 				                                      .build();
 		
 		Mockito.when(productRepository.findByCode(request.getCode())).thenReturn( Optional.of(product) );
