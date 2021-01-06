@@ -30,4 +30,12 @@ public class CategoryService {
 		}
 	}
 	
+	public Category findById(String id) {
+		Optional<Category> optional = repository.findById(id);
+		if(!optional.isPresent()) {
+			throw new CategoryDoesNotExistException(id);
+		}
+		return optional.get();
+	}
+	
 }

@@ -48,4 +48,14 @@ public class ProductService {
 		return repository.findAll();
 	}
 	
+	public Product findById(String id) {
+		Optional<Product> optional = repository.findById(id);
+		
+		if(!optional.isPresent()) {
+			throw new ProductDoesNotExistException(id);
+		}
+		
+		return optional.get();
+	}
+	
 }

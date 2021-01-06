@@ -30,4 +30,12 @@ public class FranchiseService {
 		}
 	}
 	
+	public Franchise findById(String id) {
+		Optional<Franchise> optional = repository.findById(id);
+		if(!optional.isPresent()) {
+			throw new FranchiseDoesNotExistException(id);
+		}
+		return optional.get();
+	}
+	
 }
