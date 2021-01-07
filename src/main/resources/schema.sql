@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS movements;
 DROP TABLE IF EXISTS products;
 DROP TABLE IF EXISTS categories;
 DROP TABLE IF EXISTS franchises;
+DROP TABLE IF EXISTS users;
 
 CREATE TABLE categories (
 	
@@ -49,5 +50,17 @@ CREATE TABLE movements (
 	
 	PRIMARY KEY (id),
 	FOREIGN KEY (product_id) REFERENCES products (id)
+
+);
+
+CREATE TABLE users (
+
+	id CHAR(36) NOT NULL,
+	username VARCHAR(100) NOT NULL,
+	password CHAR(60) NOT NULL,
+	first_name VARCHAR(100) NOT NULL,
+	last_name VARCHAR(100) NOT NULL,
+	
+	PRIMARY KEY (id)
 
 );

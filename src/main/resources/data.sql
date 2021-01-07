@@ -15,3 +15,5 @@ INSERT INTO franchises (id, name) VALUES ('f3d0a258-ab7a-4a2f-864a-f3acff3450e3'
 --INSERT INTO movements(id, product_id, type, quantity, price, observation, created_at) VALUES ('d81b909f-e064-41a3-bd86-931387ea85bd', '490b15ff-c75c-486c-96c1-34de50383f54', 'INCOMINGS', 9, 64500.00, 'None', STR_TO_DATE('05/01/2021 9:00:40 AM', '%c/%e/%Y %r'));
 --INSERT INTO movements(id, product_id, type, quantity, price, observation, created_at) VALUES ('45cf4697-9d03-4b93-8b2f-7f612176933f', '490b15ff-c75c-486c-96c1-34de50383f54', 'OUTGOINGS', 4, 78000.59888686, 'None', STR_TO_DATE('06/01/2021 10:06:00 AM', '%c/%e/%Y %r'));
 --INSERT INTO movements(id, product_id, type, quantity, price, observation, created_at) VALUES ('7916d06c-a6d2-4920-9836-54e9968aedf9', '490b15ff-c75c-486c-96c1-34de50383f54', 'OUTGOINGS', 1, 70000.00, 'None', STR_TO_DATE('06/01/2021 11:00:00 AM', '%c/%e/%Y %r'));
+
+INSERT INTO users (id, username, password, first_name, last_name) VALUES ('66d5c69f-7516-4773-bbd5-c273a9f5c515', 'demo', 'demo', 'Demo', 'user');
