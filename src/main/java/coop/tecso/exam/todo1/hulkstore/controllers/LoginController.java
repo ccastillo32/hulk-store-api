@@ -8,25 +8,44 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import coop.tecso.exam.todo1.hulkstore.application.dto.UserDto;
+import coop.tecso.exam.todo1.hulkstore.application.service.FindUserByUsernameService;
 import coop.tecso.exam.todo1.hulkstore.controllers.request.LoginHttpRequest;
+import coop.tecso.exam.todo1.hulkstore.controllers.response.LoginResponse;
+import coop.tecso.exam.todo1.hulkstore.security.JwtProvider;
 
 @RestController
 public class LoginController {
 
 	private AuthenticationManager authenticationManager;
 	
-	public LoginController(AuthenticationManager authenticationManager) {
+	private FindUserByUsernameService service;
+	
+	private JwtProvider jwtProvider;
+	
+	public LoginController(
+			AuthenticationManager authenticationManager, 
+			FindUserByUsernameService service,
+			JwtProvider jwtProvider) {
 		this.authenticationManager = authenticationManager;
+		this.service = service;
+		this.jwtProvider = jwtProvider;
 	}
 	
 	@PostMapping("/api/auth/login")
-	public ResponseEntity<?> handle(@RequestBody LoginHttpRequest request) {
+	public ResponseEntity<LoginResponse> handle(@RequestBody LoginHttpRequest request) {
 	
 		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword());
 		
 		authenticationManager.authenticate(token);
 		
-		return new ResponseEntity<>(HttpStatus.OK);
+		UserDto user = service.execute(request.getUsername());
+		
+		String jwtToken = jwtProvider.generateJwt(user);
+		
+		LoginResponse responseBody = LoginResponse.of(jwtToken);
+		
+		return new ResponseEntity<>(responseBody, HttpStatus.OK);
 			
 	}
 	
