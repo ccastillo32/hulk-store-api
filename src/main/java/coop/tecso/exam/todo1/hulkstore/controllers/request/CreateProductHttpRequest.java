@@ -1,9 +1,6 @@
 package coop.tecso.exam.todo1.hulkstore.controllers.request;
 
 import java.math.BigDecimal;
-import java.util.UUID;
-
-import coop.tecso.exam.todo1.hulkstore.application.request.CreateProductRequest;
 
 public class CreateProductHttpRequest {
 	
@@ -18,18 +15,6 @@ public class CreateProductHttpRequest {
 	private String categoryId;
 	
 	private String franchiseId;
-	
-	public CreateProductRequest toServiceRequest() {
-		CreateProductRequest request = new CreateProductRequest();
-		request.setId(UUID.randomUUID().toString());
-		request.setCode(code);
-		request.setName(name);
-		request.setPurchasePrice(purchasePrice);
-		request.setSellingPrice(sellingPrice);
-		request.setCategoryId(categoryId);
-		request.setFranchiseId(franchiseId);
-		return request;
-	}
 
 	public String getCode() {
 		return code;

@@ -24,11 +24,15 @@ public class ProductService {
 		repository.save(product);
 	}
 	
-	public void checkIfCodeIsUnique(String productCode) {
+	public void checkIfCodeIsAvailable(String productId, String productCode) {
 		
 		Optional<Product> optional = repository.findByCode(productCode);
 		
-		if(optional.isPresent()) {
+		if(productId != null && optional.isPresent() && !(optional.get().getId().equals(productId))) {
+			throw new ProductCodeAlreadyExistsException(productCode);
+		}
+		
+		if(productId == null && optional.isPresent()) {
 			throw new ProductCodeAlreadyExistsException(productCode);
 		}
 		

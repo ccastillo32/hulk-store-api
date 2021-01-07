@@ -1,5 +1,7 @@
 package coop.tecso.exam.todo1.hulkstore.controllers;
 
+import java.util.UUID;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,9 +24,11 @@ public class CreateProductController {
 	}
 	
 	@PostMapping("/api/products")
-	public ResponseEntity<CreateProductResponse> handleRequest( @RequestBody CreateProductHttpRequest requestBody ) {
+	public ResponseEntity<CreateProductResponse> handleRequest(
+			@RequestBody CreateProductHttpRequest requestBody 
+	) {
 		
-		CreateProductRequest request = requestBody.toServiceRequest();
+		CreateProductRequest request = toServiceRequest(requestBody);
 		
 		service.execute(request);
 		
@@ -32,6 +36,18 @@ public class CreateProductController {
 		
 		return new ResponseEntity<>(responseBody, HttpStatus.CREATED);
 		
+	}
+	
+	public CreateProductRequest toServiceRequest(CreateProductHttpRequest requestBody) {
+		CreateProductRequest request = new CreateProductRequest();
+		request.setId(UUID.randomUUID().toString());
+		request.setCode(requestBody.getCode());
+		request.setName(requestBody.getName());
+		request.setPurchasePrice(requestBody.getPurchasePrice());
+		request.setSellingPrice(requestBody.getSellingPrice());
+		request.setCategoryId(requestBody.getCategoryId());
+		request.setFranchiseId(requestBody.getFranchiseId());
+		return request;
 	}
 
 }
