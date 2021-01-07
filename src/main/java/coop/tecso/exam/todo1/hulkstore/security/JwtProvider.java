@@ -1,15 +1,17 @@
 package coop.tecso.exam.todo1.hulkstore.security;
 
-import java.security.Key;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
-import java.util.UUID;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.crypto.SecretKey;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import coop.tecso.exam.todo1.hulkstore.application.dto.UserDto;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
 @Service
@@ -17,22 +19,26 @@ import io.jsonwebtoken.security.Keys;
 public class JwtProvider {
 	
 	@Value("${jwt.secret}")
-	private String secretKey;
+	private String signingKey;
 	
 	
 	public String generateJwt(UserDto user) {
 		
-		byte[] keyBytes = Decoders.BASE64.decode(secretKey);
-		Key signingKey = Keys.hmacShaKeyFor(keyBytes);
-
-		return Jwts.builder()
-					.setId(UUID.randomUUID().toString())
-					.claim("user", user)
-				    .setIssuedAt(new Date(System.currentTimeMillis()))
-				    .setExpiration(new Date(System.currentTimeMillis() + 600000))
-				    .signWith(signingKey)
-				    .compact();
+		SecretKey key = Keys.hmacShaKeyFor(signingKey.getBytes(StandardCharsets.UTF_8));
 		
+		Map<String, String> claims = new HashMap<>();
+		claims.put("userId", user.getId());
+		claims.put("username", user.getUsername());
+		claims.put("firstName", user.getFirstName());
+		claims.put("lastName", user.getLastName());
+		
+		return Jwts.builder()
+				   .setClaims(claims)
+				   .setIssuedAt(new Date(System.currentTimeMillis()))
+			       .setExpiration(new Date(System.currentTimeMillis() + 600000))
+			       .signWith(key)
+			       .compact();
+
 	}
 
 	
