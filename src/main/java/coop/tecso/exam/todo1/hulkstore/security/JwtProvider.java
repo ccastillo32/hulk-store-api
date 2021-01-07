@@ -4,6 +4,7 @@ import java.security.Key;
 import java.util.Date;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import coop.tecso.exam.todo1.hulkstore.application.dto.UserDto;
@@ -15,26 +16,24 @@ import io.jsonwebtoken.security.Keys;
 
 public class JwtProvider {
 	
-	private static final String SECRET_KEY = "BxBwm9gsjm4qeo1mYiGvESxjpmHHq0UBIcb2Uy508jD5GAENaloaJq2KhLmF2pZ";
+	@Value("${jwt.secret}")
+	private String secretKey;
 	
 	
 	public String generateJwt(UserDto user) {
+		
+		byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+		Key signingKey = Keys.hmacShaKeyFor(keyBytes);
 
 		return Jwts.builder()
 					.setId(UUID.randomUUID().toString())
 					.claim("user", user)
 				    .setIssuedAt(new Date(System.currentTimeMillis()))
 				    .setExpiration(new Date(System.currentTimeMillis() + 600000))
-				    .signWith(getSigningKey())
+				    .signWith(signingKey)
 				    .compact();
 		
 	}
-	
-	
-	private static Key getSigningKey() {
-		byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
-		return Keys.hmacShaKeyFor(keyBytes);
-	}
-	
+
 	
 }
