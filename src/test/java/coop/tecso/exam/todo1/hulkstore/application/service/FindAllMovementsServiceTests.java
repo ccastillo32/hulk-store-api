@@ -2,9 +2,6 @@ package coop.tecso.exam.todo1.hulkstore.application.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,9 +13,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import coop.tecso.exam.todo1.hulkstore.application.data.MovementData;
+import coop.tecso.exam.todo1.hulkstore.application.data.ProductData;
 import coop.tecso.exam.todo1.hulkstore.application.dto.MovementDto;
-import coop.tecso.exam.todo1.hulkstore.domain.model.Movement;
-import coop.tecso.exam.todo1.hulkstore.domain.model.MovementType;
 import coop.tecso.exam.todo1.hulkstore.domain.repository.MovementRepository;
 import coop.tecso.exam.todo1.hulkstore.domain.service.MovementService;
 
@@ -43,7 +40,7 @@ final class FindAllMovementsServiceTests {
 	@DisplayName("Should get a non empty list of movements")
 	void shouldGetANonEmptyList() {
 		
-		Mockito.when(movementRepository.findAll()).thenReturn(movements());
+		Mockito.when(movementRepository.findAll()).thenReturn(MovementData.allMovements());
 		
 		int expectedMovements = 1;
 		
@@ -75,9 +72,9 @@ final class FindAllMovementsServiceTests {
 	@DisplayName("Should get all the movements by product id")
 	void shouldGetAllTheMovementsByProduct() {
 		
-		String productId = "a5300e96-2968-467c-9f54-79eb0bedc94d";
+		String productId = ProductData.product1().getId();
 		
-		Mockito.when(movementRepository.findByProductId(productId)).thenReturn(movements());
+		Mockito.when(movementRepository.findByProductId(productId)).thenReturn(MovementData.allMovements());
 		
 		int expectedMovements = 1;
 		
@@ -86,18 +83,5 @@ final class FindAllMovementsServiceTests {
 		assertEquals(expectedMovements, allMovements.size());
 		
 	}
-	
-	private List<Movement> movements() {
-		String id = "c26907bb-adf4-4160-96e0-20545a3543ef";
-		String productId = "a5300e96-2968-467c-9f54-79eb0bedc94d";
-		MovementType type = MovementType.INCOMINGS;
-		Integer quantity = 10;
-		BigDecimal price = new BigDecimal("3000");
-		String observation = "Some observation";
-		LocalDateTime createdAt = LocalDateTime.now();
-		Movement movementOne = Movement.of(id, productId, type, quantity, price, observation, createdAt);
-		
-		return Arrays.asList(movementOne);
-	}
-	
+
 }
