@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import coop.tecso.exam.todo1.hulkstore.application.request.RegisterIncomingInventoryRequest;
+import coop.tecso.exam.todo1.hulkstore.application.request.RegisterOutgoingInventoryRequest;
 import coop.tecso.exam.todo1.hulkstore.domain.model.Movement;
 import coop.tecso.exam.todo1.hulkstore.domain.model.MovementType;
 import coop.tecso.exam.todo1.hulkstore.domain.service.MovementService;
@@ -26,7 +27,7 @@ public class RegisterOutgoingInventoryService {
 		this.productService = productService;
 	}
 	
-	public void execute(RegisterIncomingInventoryRequest request) {
+	public void execute(RegisterOutgoingInventoryRequest request) {
 		
 		checkNotNull(request);
 		
