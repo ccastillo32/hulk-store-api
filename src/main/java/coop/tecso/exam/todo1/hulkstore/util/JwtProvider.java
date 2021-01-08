@@ -1,6 +1,8 @@
 package coop.tecso.exam.todo1.hulkstore.util;
 
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,13 +34,22 @@ public class JwtProvider {
 		claims.put("firstName", user.getFirstName());
 		claims.put("lastName", user.getLastName());
 		
+		LocalDateTime now = LocalDateTime.now();
+		
+		Date issuetAt = toDate(now);
+		Date expiration = toDate(now.plusHours(1));
+		
 		return Jwts.builder()
 				   .setClaims(claims)
-				   .setIssuedAt(new Date(System.currentTimeMillis()))
-			       .setExpiration(new Date(System.currentTimeMillis() + 600000))
+				   .setIssuedAt(issuetAt)
+			       .setExpiration(expiration)
 			       .signWith(key)
 			       .compact();
 
+	}
+	
+	private Date toDate(LocalDateTime localDateTime) {
+		return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
 	}
 
 	
