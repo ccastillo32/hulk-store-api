@@ -3,7 +3,6 @@ package coop.tecso.exam.todo1.hulkstore.application.service;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.math.BigDecimal;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -14,10 +13,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import coop.tecso.exam.todo1.hulkstore.application.data.RegisterIncomingInventoryRequestData;
+import coop.tecso.exam.todo1.hulkstore.application.data.ProductData;
 import coop.tecso.exam.todo1.hulkstore.application.request.RegisterIncomingInventoryRequest;
-import coop.tecso.exam.todo1.hulkstore.domain.model.Category;
-import coop.tecso.exam.todo1.hulkstore.domain.model.Franchise;
-import coop.tecso.exam.todo1.hulkstore.domain.model.Product;
 import coop.tecso.exam.todo1.hulkstore.domain.repository.MovementRepository;
 import coop.tecso.exam.todo1.hulkstore.domain.repository.ProductRepository;
 import coop.tecso.exam.todo1.hulkstore.domain.service.MovementService;
@@ -68,13 +66,9 @@ final class RegisterIncomingInventoryServiceTests {
 	@DisplayName("Cannot create a movement if the Product Id is unknown")
 	void cannotCreateMovementForAnUnknwonProduct() {
 		
-		String id = "5d364b17-bf10-4b35-9aff-adfebf04b8eb";
-		String randomProductId = "a5300e96-2968-467c-9f54-79eb0bedc94d";
-		Integer quantity = 1;
-		BigDecimal unitPrice = new BigDecimal("5");
-		RegisterIncomingInventoryRequest request = new RegisterIncomingInventoryRequest(id, randomProductId, quantity, unitPrice, "");
+		RegisterIncomingInventoryRequest request = RegisterIncomingInventoryRequestData.incomingRequest();
 		
-		Mockito.when(productRepository.findById(randomProductId)).thenReturn(Optional.empty());
+		Mockito.when(productRepository.findById(request.getProductId())).thenReturn(Optional.empty());
 		
 		assertThrows(ProductDoesNotExistException.class, () -> service.execute(request) );
 		
@@ -84,12 +78,7 @@ final class RegisterIncomingInventoryServiceTests {
 	@DisplayName("Cannot create a movement if the quantity is zero or below")
 	void cannotCreateMovementWithQuantityZero() {
 		
-		String id = "5d364b17-bf10-4b35-9aff-adfebf04b8eb";
-		String productId = "a5300e96-2968-467c-9f54-79eb0bedc94d";
-		Integer quantity = 0;
-		BigDecimal unitPrice = new BigDecimal("5");
-		
-		RegisterIncomingInventoryRequest request = new RegisterIncomingInventoryRequest(id, productId, quantity, unitPrice, "");
+		RegisterIncomingInventoryRequest request = RegisterIncomingInventoryRequestData.withQuantityZero();
 		
 		assertThrows(InvalidFieldException.class, () -> service.execute(request));
 		
@@ -99,17 +88,9 @@ final class RegisterIncomingInventoryServiceTests {
 	@DisplayName("should create a valid incoming inventory movement")
 	void createAValidIncomingInventoryMovement() {
 
-		String id = "5d364b17-bf10-4b35-9aff-adfebf04b8eb";
-		String productId = "a5300e96-2968-467c-9f54-79eb0bedc94d";
-		Integer quantity = 5;
-		BigDecimal unitPrice = new BigDecimal("5000");
+		RegisterIncomingInventoryRequest request = RegisterIncomingInventoryRequestData.incomingRequest();
 		
-		Category category = Category.of("f3559fb4-ea4a-4c86-b889-e0838a0719c5", "T-shirts");
-		Franchise franchise = Franchise.of("9878cdc6-d089-405f-9f4d-5d53dcc79726", "Marvel");
-		Product product = Product.of(productId, "001", "Product 1", new BigDecimal("100"), new BigDecimal("200"), category.getId(), franchise.getId());
-		Mockito.when(productRepository.findById(productId)).thenReturn(Optional.of(product));
-		
-		RegisterIncomingInventoryRequest request = RegisterIncomingInventoryRequest.of(id, productId, quantity, unitPrice, "");
+		Mockito.when(productRepository.findById(request.getProductId())).thenReturn(Optional.of(ProductData.product1()));
 		
 		assertDoesNotThrow( () -> service.execute(request) );
 		
