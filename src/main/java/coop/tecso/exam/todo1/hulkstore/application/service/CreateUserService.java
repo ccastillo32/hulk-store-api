@@ -1,7 +1,6 @@
 package coop.tecso.exam.todo1.hulkstore.application.service;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import coop.tecso.exam.todo1.hulkstore.application.request.CreateUserRequest;

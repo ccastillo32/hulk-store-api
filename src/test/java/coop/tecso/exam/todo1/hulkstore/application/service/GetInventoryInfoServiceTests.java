@@ -17,6 +17,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import coop.tecso.exam.todo1.hulkstore.application.dto.InventoryInfoDto;
+import coop.tecso.exam.todo1.hulkstore.application.request.FilterOptions;
 import coop.tecso.exam.todo1.hulkstore.domain.model.Category;
 import coop.tecso.exam.todo1.hulkstore.domain.model.Franchise;
 import coop.tecso.exam.todo1.hulkstore.domain.model.Movement;
@@ -56,7 +57,7 @@ final class GetInventoryInfoServiceTests {
 		
 		Mockito.when(productRepository.findAll()).thenReturn(Collections.emptyList());
 		
-		List<InventoryInfoDto> items = service.execute();
+		List<InventoryInfoDto> items = service.execute(noFilter());
 		
 		assertEquals(0, items.size());
 		
@@ -70,7 +71,7 @@ final class GetInventoryInfoServiceTests {
 		mockProducts(productId);
 		mockMovements(productId);
 		
-		List<InventoryInfoDto> items = service.execute();
+		List<InventoryInfoDto> items = service.execute(noFilter());
 		
 		InventoryInfoDto info = items.get(0);
 		
@@ -119,6 +120,10 @@ final class GetInventoryInfoServiceTests {
 		
 		Mockito.when(movementRepository.findAll()).thenReturn(allMovements);
 		
+	}
+	
+	private FilterOptions noFilter() {
+		return new FilterOptions();
 	}
 	
 }

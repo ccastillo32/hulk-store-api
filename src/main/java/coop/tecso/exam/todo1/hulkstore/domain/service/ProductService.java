@@ -2,9 +2,11 @@ package coop.tecso.exam.todo1.hulkstore.domain.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import coop.tecso.exam.todo1.hulkstore.application.request.FilterOptions;
 import coop.tecso.exam.todo1.hulkstore.domain.model.Product;
 import coop.tecso.exam.todo1.hulkstore.domain.repository.ProductRepository;
 import coop.tecso.exam.todo1.hulkstore.domain.service.exceptions.ProductCodeAlreadyExistsException;
@@ -48,8 +50,17 @@ public class ProductService {
 		
 	}
 	
-	public List<Product> findAllProducts() {
-		return repository.findAll();
+	public List<Product> findAllProducts(FilterOptions filter) {
+		
+		List<Product> allProducts = repository.findAll();
+		
+		if(filter.getFranchiseId() != null) {
+			allProducts = allProducts.stream()
+					                 .filter(p -> p.getFranchiseId().equals(filter.getFranchiseId()))
+					                 .collect(Collectors.toList());
+		}
+		
+		return allProducts;
 	}
 	
 	public Product findById(String id) {

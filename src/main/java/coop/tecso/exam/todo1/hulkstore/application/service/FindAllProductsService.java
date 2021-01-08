@@ -8,12 +8,14 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import coop.tecso.exam.todo1.hulkstore.application.dto.ProductDto;
+import coop.tecso.exam.todo1.hulkstore.application.request.FilterOptions;
 import coop.tecso.exam.todo1.hulkstore.domain.model.Category;
 import coop.tecso.exam.todo1.hulkstore.domain.model.Franchise;
 import coop.tecso.exam.todo1.hulkstore.domain.model.Product;
 import coop.tecso.exam.todo1.hulkstore.domain.service.CategoryService;
 import coop.tecso.exam.todo1.hulkstore.domain.service.FranchiseService;
 import coop.tecso.exam.todo1.hulkstore.domain.service.ProductService;
+import coop.tecso.exam.todo1.hulkstore.domain.validator.FieldValidator;
 
 @Service
 
@@ -30,9 +32,11 @@ public class FindAllProductsService {
 		this.franchiseService = franchiseService;
 	}
 	
-	public List<ProductDto> execute() {
+	public List<ProductDto> execute(FilterOptions filter) {
 		
-		List<Product> allProducts = productService.findAllProducts();
+		FieldValidator.notNull(filter, "FindAllProductsFilter");
+		
+		List<Product> allProducts = productService.findAllProducts(filter);
 		
 		if(allProducts.isEmpty()) {
 			return Collections.emptyList();

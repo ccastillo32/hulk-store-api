@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import coop.tecso.exam.todo1.hulkstore.application.dto.InventoryInfoDto;
+import coop.tecso.exam.todo1.hulkstore.application.request.FilterOptions;
 import coop.tecso.exam.todo1.hulkstore.domain.model.Movement;
 import coop.tecso.exam.todo1.hulkstore.domain.model.MovementType;
 import coop.tecso.exam.todo1.hulkstore.domain.model.Product;
@@ -25,9 +26,9 @@ public class GetInventoryInfoService {
 		this.productService = productService;
 	}
 
-	public List<InventoryInfoDto> execute() {
+	public List<InventoryInfoDto> execute(FilterOptions filter) {
 		
-		List<Product> allProducts = productService.findAllProducts();
+		List<Product> allProducts = productService.findAllProducts(filter);
 		
 		if(allProducts.isEmpty()) {
 			return Collections.emptyList();

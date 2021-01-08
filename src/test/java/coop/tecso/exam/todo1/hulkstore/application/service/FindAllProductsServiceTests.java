@@ -17,6 +17,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import coop.tecso.exam.todo1.hulkstore.application.dto.ProductDto;
+import coop.tecso.exam.todo1.hulkstore.application.request.FilterOptions;
 import coop.tecso.exam.todo1.hulkstore.domain.model.Category;
 import coop.tecso.exam.todo1.hulkstore.domain.model.Franchise;
 import coop.tecso.exam.todo1.hulkstore.domain.model.Product;
@@ -68,7 +69,7 @@ final class FindAllProductsServiceTests {
 		
 		Mockito.when(productRepository.findAll()).thenReturn(Collections.emptyList());
 		
-		List<ProductDto> allProducts = service.execute();
+		List<ProductDto> allProducts = service.execute(noFilter());
 		
 		assertNotNull(allProducts);
 		assertEquals(0, allProducts.size());
@@ -83,7 +84,7 @@ final class FindAllProductsServiceTests {
 		Mockito.when(franchiseRepository.findAll()).thenReturn(franchises());
 		Mockito.when(productRepository.findAll()).thenReturn(products());
 		
-		List<ProductDto> allProducts = service.execute();
+		List<ProductDto> allProducts = service.execute(noFilter());
 		
 		assertNotNull(allProducts);
 		assertEquals(2, allProducts.size());
@@ -111,6 +112,10 @@ final class FindAllProductsServiceTests {
 		Franchise others = Franchise.of("4e5d622d-895b-429e-b564-63ed7ebc7820", "Others");
 		
 		return Arrays.asList(marvel, dc, others);
+	}
+	
+	private FilterOptions noFilter() {
+		return new FilterOptions();
 	}
 	
 }
