@@ -8,7 +8,7 @@ Aplicación acerca de gestión de inventarios.
 
 #### Pasos para ejecutar aplicación:
 
-Acceder a la consola de comandos y ejecutar los siguientes comandos:
+Acceder a la consola de comandos, y desde la carpeta raiz del proyecto, ejecutar los siguientes comandos:
 
 ```
 mvn clean install
