@@ -5,8 +5,6 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
-import org.mockito.Mockito;
-
 import coop.tecso.exam.todo1.hulkstore.domain.model.Movement;
 import coop.tecso.exam.todo1.hulkstore.domain.model.MovementType;
 
