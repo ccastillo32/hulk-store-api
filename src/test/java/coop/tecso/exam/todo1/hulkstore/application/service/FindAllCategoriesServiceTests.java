@@ -3,7 +3,6 @@ package coop.tecso.exam.todo1.hulkstore.application.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -15,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import coop.tecso.exam.todo1.hulkstore.application.data.CategoryData;
 import coop.tecso.exam.todo1.hulkstore.application.dto.CategoryDto;
 import coop.tecso.exam.todo1.hulkstore.domain.model.Category;
 import coop.tecso.exam.todo1.hulkstore.domain.repository.CategoryRepository;
@@ -43,7 +43,7 @@ final class FindAllCategoriesServiceTests {
 		
 		int expectedCategories = 2;
 		
-		mockCategoriesInDatabaseWith(getSomeCategories());
+		mockCategoriesInDatabaseWith(CategoryData.allCategories());
 		
 		List<CategoryDto> categories = service.execute();
 		
@@ -70,11 +70,5 @@ final class FindAllCategoriesServiceTests {
 	private void mockCategoriesInDatabaseWith(List<Category> mock) {
 		Mockito.when(categoryRepository.findAll()).thenReturn(mock);
 	}
-	
-	private List<Category> getSomeCategories() {
-		Category tShirts = Category.of("f3559fb4-ea4a-4c86-b889-e0838a0719c5", "T-shirts");
-		Category toys    = Category.of("7e7937a6-e008-42f9-b619-d15a41108b8a", "Toys");
-		return Arrays.asList( tShirts, toys );
-	}
-	
+
 }
