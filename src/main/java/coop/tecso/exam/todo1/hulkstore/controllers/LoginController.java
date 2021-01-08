@@ -12,7 +12,7 @@ import coop.tecso.exam.todo1.hulkstore.application.dto.UserDto;
 import coop.tecso.exam.todo1.hulkstore.application.service.FindUserByUsernameService;
 import coop.tecso.exam.todo1.hulkstore.controllers.request.LoginHttpRequest;
 import coop.tecso.exam.todo1.hulkstore.controllers.response.LoginResponse;
-import coop.tecso.exam.todo1.hulkstore.security.JwtProvider;
+import coop.tecso.exam.todo1.hulkstore.util.JwtProvider;
 
 @RestController
 public class LoginController {

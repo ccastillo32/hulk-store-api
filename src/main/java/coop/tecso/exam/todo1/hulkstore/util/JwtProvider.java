@@ -1,4 +1,4 @@
-package coop.tecso.exam.todo1.hulkstore.security;
+package coop.tecso.exam.todo1.hulkstore.util;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
