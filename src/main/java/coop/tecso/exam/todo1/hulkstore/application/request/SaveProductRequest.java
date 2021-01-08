@@ -1,8 +1,10 @@
-package coop.tecso.exam.todo1.hulkstore.controllers.request;
+package coop.tecso.exam.todo1.hulkstore.application.request;
 
 import java.math.BigDecimal;
 
-public class CreateProductHttpRequest {
+public class SaveProductRequest {
+	
+	private String id;
 	
 	private String code;
 	
@@ -15,6 +17,14 @@ public class CreateProductHttpRequest {
 	private String categoryId;
 	
 	private String franchiseId;
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getCode() {
 		return code;

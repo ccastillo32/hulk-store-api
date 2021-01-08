@@ -2,7 +2,7 @@ package coop.tecso.exam.todo1.hulkstore.application.service;
 
 import org.springframework.stereotype.Service;
 
-import coop.tecso.exam.todo1.hulkstore.application.request.UpdateProductRequest;
+import coop.tecso.exam.todo1.hulkstore.application.request.SaveProductRequest;
 import coop.tecso.exam.todo1.hulkstore.domain.model.Product;
 import coop.tecso.exam.todo1.hulkstore.domain.model.ProductBuilder;
 import coop.tecso.exam.todo1.hulkstore.domain.service.CategoryService;
@@ -12,22 +12,21 @@ import coop.tecso.exam.todo1.hulkstore.domain.validator.FieldValidator;
 
 @Service
 
-public class UpdateProductService {
+public class SaveProductService {
 	
 	private ProductService productService;
 	private CategoryService categoryService;
 	private FranchiseService franchiseService;
 	
-	public UpdateProductService(ProductService productService, CategoryService categoryService,
-			FranchiseService franchiseService) {
+	public SaveProductService(ProductService productService, CategoryService categoryService, FranchiseService franchiseService) {
 		this.productService = productService;
 		this.categoryService = categoryService;
 		this.franchiseService = franchiseService;
 	}
-
-	public void execute(UpdateProductRequest request) {
+	
+	public void execute(SaveProductRequest request, boolean isANewProduct) {
 		
-		FieldValidator.notNull(request, "UpdateProductRequest");
+		FieldValidator.notNull(request, "SaveProductRequest");
 		
 		Product product = ProductBuilder.newInstance()
 				                        .id(request.getId())
@@ -39,9 +38,14 @@ public class UpdateProductService {
 				                        .franchiseId(request.getFranchiseId())
 				                        .build();
 		
-		productService.checkIfProductExists(request.getId());
+		if(isANewProduct) {
+			productService.checkIfCodeIsAvailable(null, product.getCode());
+		}
 		
-        productService.checkIfCodeIsAvailable(product.getId(), product.getCode());
+		if(!isANewProduct) {
+			productService.checkIfProductExists(request.getId());
+			productService.checkIfCodeIsAvailable(product.getId(), product.getCode());
+		}
 		
 		categoryService.checkIfCategoryExists(product.getCategoryId());
 		
@@ -50,5 +54,5 @@ public class UpdateProductService {
 		productService.save(product);
 		
 	}
-
+	
 }

@@ -2,15 +2,15 @@ package coop.tecso.exam.todo1.hulkstore.application.data;
 
 import java.math.BigDecimal;
 
-import coop.tecso.exam.todo1.hulkstore.application.request.CreateProductRequest;
+import coop.tecso.exam.todo1.hulkstore.application.request.SaveProductRequest;
 
-public class CreateProductRequestData {
+public class SaveProductRequestData {
 	
-	private CreateProductRequestData() {	
+	private SaveProductRequestData() {	
 	}
 	
-	public static CreateProductRequest validRequest() {
-		CreateProductRequest request = new CreateProductRequest();
+	public static SaveProductRequest validRequest() {
+		SaveProductRequest request = new SaveProductRequest();
 		request.setId("443b5be9-9e8c-46b7-af0e-1810da29a0f4");
 		request.setCode("C001XYZ");
 		request.setName("Spiderman comic #001");
@@ -21,13 +21,13 @@ public class CreateProductRequestData {
 		return request;
 	}
 	
-	public static CreateProductRequest requestWithEmptyFields() {
-		CreateProductRequest request = new CreateProductRequest();
+	public static SaveProductRequest requestWithEmptyFields() {
+		SaveProductRequest request = new SaveProductRequest();
 		request.setId("");
 		return request;
 	}
 	
-	public static CreateProductRequest nullRequest() {
+	public static SaveProductRequest nullRequest() {
 		return null;
 	}
 
