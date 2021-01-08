@@ -16,6 +16,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import coop.tecso.exam.todo1.hulkstore.application.data.CategoryData;
+import coop.tecso.exam.todo1.hulkstore.application.data.FranchiseData;
+import coop.tecso.exam.todo1.hulkstore.application.data.ProductData;
 import coop.tecso.exam.todo1.hulkstore.application.dto.ProductDto;
 import coop.tecso.exam.todo1.hulkstore.application.request.FilterOptions;
 import coop.tecso.exam.todo1.hulkstore.domain.model.Category;
@@ -80,38 +83,15 @@ final class FindAllProductsServiceTests {
 	@DisplayName("It should get an non-empty list of products")
 	void shouldGetAnNonEmptyListOfProducts() {
 		
-		Mockito.when(categoryRepository.findAll()).thenReturn(categories());
-		Mockito.when(franchiseRepository.findAll()).thenReturn(franchises());
-		Mockito.when(productRepository.findAll()).thenReturn(products());
+		Mockito.when(categoryRepository.findAll()).thenReturn(CategoryData.allCategories());
+		Mockito.when(franchiseRepository.findAll()).thenReturn(FranchiseData.allFranchises());
+		Mockito.when(productRepository.findAll()).thenReturn(ProductData.allProducts());
 		
 		List<ProductDto> allProducts = service.execute(noFilter());
 		
 		assertNotNull(allProducts);
 		assertEquals(2, allProducts.size());
 		
-	}
-	
-	public List<Product> products() {
-		
-		Product p1 = Product.of("dc3029fc-ffd2-4d2b-9c2f-6c9c01ef4040", "001", "Product 1", new BigDecimal("100"), new BigDecimal("200"), "7e7937a6-e008-42f9-b619-d15a41108b8a", "f3d0a258-ab7a-4a2f-864a-f3acff3450e3");
-		Product p2 = Product.of("f624d3ed-6899-4dbb-8871-6ac3dbab20bb", "001", "Product 1", new BigDecimal("100"), new BigDecimal("200"), "f3559fb4-ea4a-4c86-b889-e0838a0719c5", "9878cdc6-d089-405f-9f4d-5d53dcc79726");
-		
-		return Arrays.asList(p1, p2);
-		
-	}
-	
-	private List<Category> categories() {
-		Category tShirts = Category.of("f3559fb4-ea4a-4c86-b889-e0838a0719c5", "T-shirts");
-		Category toys    = Category.of("7e7937a6-e008-42f9-b619-d15a41108b8a", "Toys");
-		return Arrays.asList( tShirts, toys );
-	}
-	
-	private List<Franchise> franchises() {
-		Franchise marvel = Franchise.of("9878cdc6-d089-405f-9f4d-5d53dcc79726", "Marvel");
-		Franchise dc = Franchise.of("f3d0a258-ab7a-4a2f-864a-f3acff3450e3", "DC");
-		Franchise others = Franchise.of("4e5d622d-895b-429e-b564-63ed7ebc7820", "Others");
-		
-		return Arrays.asList(marvel, dc, others);
 	}
 	
 	private FilterOptions noFilter() {
