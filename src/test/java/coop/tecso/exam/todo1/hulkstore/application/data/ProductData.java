@@ -31,7 +31,7 @@ public class ProductData {
 	
 	public static Product product2() {
 		return Product.of(
-				"dc3029fc-ffd2-4d2b-9c2f-6c9c01ef4040", 
+				"2f01b3e3-0424-4338-8c06-1cb54def3b77", 
 				"002", 
 				"Product 2", 
 				new BigDecimal("100"), 

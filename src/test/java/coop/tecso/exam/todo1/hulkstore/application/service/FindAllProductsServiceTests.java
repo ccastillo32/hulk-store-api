@@ -3,8 +3,6 @@ package coop.tecso.exam.todo1.hulkstore.application.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -21,9 +19,6 @@ import coop.tecso.exam.todo1.hulkstore.application.data.FranchiseData;
 import coop.tecso.exam.todo1.hulkstore.application.data.ProductData;
 import coop.tecso.exam.todo1.hulkstore.application.dto.ProductDto;
 import coop.tecso.exam.todo1.hulkstore.application.request.FilterOptions;
-import coop.tecso.exam.todo1.hulkstore.domain.model.Category;
-import coop.tecso.exam.todo1.hulkstore.domain.model.Franchise;
-import coop.tecso.exam.todo1.hulkstore.domain.model.Product;
 import coop.tecso.exam.todo1.hulkstore.domain.repository.CategoryRepository;
 import coop.tecso.exam.todo1.hulkstore.domain.repository.FranchiseRepository;
 import coop.tecso.exam.todo1.hulkstore.domain.repository.ProductRepository;
