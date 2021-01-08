@@ -24,11 +24,13 @@ public class FindAllProductsController {
 
 	@GetMapping("/api/products")
 	public ResponseEntity<FindAllProductsResponse> handleRequest(
-		@RequestParam(required = false) String franchiseId
+		@RequestParam(required = false) String franchiseId,
+		@RequestParam(required = false) String categoryId
 	) {
 		
 		FilterOptions filter = new FilterOptions();
 		filter.setFranchiseId(franchiseId);
+		filter.setCategoryId(categoryId);
 		
 		List<ProductDto> allProducts = service.execute(filter);
 		

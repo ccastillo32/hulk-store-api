@@ -60,6 +60,12 @@ public class ProductService {
 					                 .collect(Collectors.toList());
 		}
 		
+		if(filter.getCategoryId() != null) {
+			allProducts = allProducts.stream()
+					                 .filter(p -> p.getCategoryId().equals(filter.getCategoryId()))
+					                 .collect(Collectors.toList());
+		}
+		
 		return allProducts;
 	}
 	

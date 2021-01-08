@@ -24,11 +24,13 @@ public class GetInventoryInfoController {
 	
 	@GetMapping("/api/inventory-info")
 	public ResponseEntity<GetInventoryInfoResponse> handleRequest(
-		@RequestParam(required = false) String franchiseId
+		@RequestParam(required = false) String franchiseId,
+		@RequestParam(required = false) String categoryId
 	) {
 		
 		FilterOptions filter = new FilterOptions();
 		filter.setFranchiseId(franchiseId);
+		filter.setCategoryId(categoryId);
 		
 		List<InventoryInfoDto> allData = service.execute(filter);
 		
